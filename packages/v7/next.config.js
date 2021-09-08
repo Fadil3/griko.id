@@ -9,7 +9,7 @@ const Log = require("next/dist/build/output/log");
 // https://github.com/leerob/leerob.io/blob/9adc510cbfb3da88c3b0ad15632eb876ca91b607/next.config.js#L39-L49
 const csp = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' plausible.io static.cloudflareinsights.com;
   child-src *.twitter.com;
   style-src 'self' 'unsafe-inline' fonts.googleapis.com;
   img-src * blob: data:;

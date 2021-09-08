@@ -1,13 +1,13 @@
 import * as React from "react";
 
 import analyticsConfig from "~config/analytics";
+import siteConfig from "~config/site";
 import emotionCache from "~lib/emotion-cache";
 
 import { ColorModeScript } from "@chakra-ui/react";
 import createEmotionServer from "@emotion/server/create-instance";
 import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document";
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
 const { extractCritical } = createEmotionServer(emotionCache);
 
 export default class CustomDocument extends Document {
@@ -34,24 +34,27 @@ export default class CustomDocument extends Document {
           <meta charSet="UTF-8" />
           <meta content="ie=edge" httpEquiv="X-UA-Compatible" />
 
-          <link href="https://fonts.gstatic.com" rel="preconnect" />
+          <link href="https://fonts.googleapis.com" rel="preconnect" />
+          <link crossOrigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+
           <link
             href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
             rel="stylesheet"
           />
           <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+
+          <script data-domain={siteConfig.domain} defer src="https://plausible.io/js/plausible.js" />
+          <script
+            data-cf-beacon={analyticsConfig.cloudflareDataBeacon}
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+          />
         </Head>
 
         <body>
           <ColorModeScript initialColorMode="dark" />
           <Main />
           <NextScript />
-
-          <script
-            data-cf-beacon={`{"token": "${analyticsConfig.cloudflareBeaconToken}"}`}
-            defer
-            src="https://static.cloudflareinsights.com/beacon.min.js"
-          />
         </body>
       </Html>
     );

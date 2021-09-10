@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 const routeArray = Object.entries(routes as Record<string, string>);
 
-const Navbar: React.FC = () => {
+export default function Navbar() {
   const router = useRouter();
 
   const isRoute = React.useCallback(
@@ -59,6 +59,4 @@ const Navbar: React.FC = () => {
       ))}
     </HStack>
   );
-};
-
-export default Navbar;
+}

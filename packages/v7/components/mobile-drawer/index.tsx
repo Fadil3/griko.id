@@ -22,7 +22,7 @@ import shallow from "zustand/shallow";
 
 const routeArray = Object.entries(routes as Record<string, string>);
 
-const MobileModal: React.FC = () => {
+export default function MobileModal() {
   const [isOpen, onClose, onOpen] = useGlobalStore(
     React.useCallback((store) => [store.isMobileDrawerOpen, store.closeMobileDrawer, store.openMobileDrawer], []),
     shallow,
@@ -94,6 +94,4 @@ const MobileModal: React.FC = () => {
       )}
     </>
   );
-};
-
-export default MobileModal;
+}

@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { DefaultSeo, SocialProfileJsonLd } from "next-seo";
 import { OpenGraphImages } from "next-seo/lib/types";
 
-function Effects() {
+function LayoutSubscriptions() {
   useCheatsheetSyncSetup();
   useKeybinds();
   useNProgress();
@@ -24,9 +24,11 @@ function Effects() {
   return null;
 }
 
-const DefaultLayout: React.FC = (props) => {
-  const { children } = props;
+interface DefaultLayoutProps {
+  children: React.ReactNode;
+}
 
+export default function DefaultLayout({ children }: DefaultLayoutProps) {
   const router = useRouter();
 
   return (
@@ -69,9 +71,7 @@ const DefaultLayout: React.FC = (props) => {
         <KeybindsCheatsheet />
       </Flex>
 
-      <Effects />
+      <LayoutSubscriptions />
     </>
   );
-};
-
-export default DefaultLayout;
+}

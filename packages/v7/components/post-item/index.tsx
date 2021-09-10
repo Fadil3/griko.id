@@ -3,7 +3,19 @@ import * as React from "react";
 import DatoImage from "~components/dato-image";
 import { PostMetaFieldsFragment } from "~generated/graphql";
 
-import { Box, Heading, LinkBox, LinkBoxProps, LinkOverlay, Stack, Tag, Text, Wrap, WrapItem } from "@chakra-ui/react";
+import {
+  Box,
+  forwardRef,
+  Heading,
+  LinkBox,
+  LinkBoxProps,
+  LinkOverlay,
+  Stack,
+  Tag,
+  Text,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react";
 import format from "date-fns/format";
 import Link from "next/link";
 import { ResponsiveImageType } from "react-datocms";
@@ -13,7 +25,7 @@ interface PostItemProps extends LinkBoxProps {
   post: PostMetaFieldsFragment;
 }
 
-const PostItem = React.forwardRef<null, PostItemProps>(function PostItem(props, ref) {
+const PostItem = forwardRef<PostItemProps, "div">(function PostItem(props, ref) {
   const { href, post, ...rest } = props;
 
   const Wrapper = href ? LinkBox : Box;

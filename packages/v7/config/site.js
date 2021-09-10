@@ -1,3 +1,5 @@
+// @ts-check
+
 const siteConfig = {
   domain: `griko.id`,
   siteUrl: `https://griko.id`,

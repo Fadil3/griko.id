@@ -20,7 +20,7 @@ MIT License &copy; ${new Date().getFullYear()}&ndash;present
 `.trim();
 }
 
-const Footer: React.FC = () => {
+export default function Footer() {
   const { GitHub, Twitter } = meta.about.socialsJson;
 
   const open = useGlobalStore(React.useCallback((store) => store.openCheatsheet, []));
@@ -61,6 +61,4 @@ const Footer: React.FC = () => {
       </Stack>
     </Container>
   );
-};
-
-export default Footer;
+}

@@ -12,9 +12,7 @@ interface ShowcaseItemProps {
   data: ShowcaseFragment;
 }
 
-const ShowcaseItem: React.FC<ShowcaseItemProps> = (props) => {
-  const { data } = props;
-
+export default function ShowcaseItem({ data }: ShowcaseItemProps) {
   return (
     <LinkBox
       key={data.id as string}
@@ -73,6 +71,4 @@ const ShowcaseItem: React.FC<ShowcaseItemProps> = (props) => {
       </Stack>
     </LinkBox>
   );
-};
-
-export default ShowcaseItem;
+}

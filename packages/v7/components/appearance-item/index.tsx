@@ -13,9 +13,7 @@ interface AppearanceItemProps {
   data: AppearanceFragment;
 }
 
-const AppearanceItem: React.FC<AppearanceItemProps> = (props) => {
-  const { data } = props;
-
+export default function AppearanceItem({ data }: AppearanceItemProps) {
   return (
     <LinkBox
       _hover={{
@@ -64,6 +62,4 @@ const AppearanceItem: React.FC<AppearanceItemProps> = (props) => {
       </Stack>
     </LinkBox>
   );
-};
-
-export default AppearanceItem;
+}

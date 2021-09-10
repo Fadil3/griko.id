@@ -6,7 +6,7 @@ import { useGlobalStore } from "~store/global";
 import { Heading, HStack, Kbd, Modal, ModalBody, ModalContent, ModalOverlay, Stack, Text } from "@chakra-ui/react";
 import shallow from "zustand/shallow";
 
-const KeybindsCheatsheet: React.FC = () => {
+export default function KeybindsCheatsheet() {
   const [isOpen, onClose] = useGlobalStore(
     React.useCallback((store) => [store.isCheatsheetOpen, store.closeCheatsheet], []),
     shallow,
@@ -38,6 +38,4 @@ const KeybindsCheatsheet: React.FC = () => {
       </ModalOverlay>
     </Modal>
   );
-};
-
-export default KeybindsCheatsheet;
+}

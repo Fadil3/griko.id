@@ -37,59 +37,59 @@ type AboutRecord {
 }
 
 input AppearanceModelFilter {
+  OR: [AppearanceModelFilter]
   _createdAt: CreatedAtFilter
-  createdAt: CreatedAtFilter
-  id: ItemIdFilter
   _firstPublishedAt: PublishedAtFilter
+  _isValid: BooleanFilter
   _publicationScheduledAt: PublishedAtFilter
-  _unpublishingScheduledAt: PublishedAtFilter
   _publishedAt: PublishedAtFilter
   _status: StatusFilter
+  _unpublishingScheduledAt: PublishedAtFilter
   _updatedAt: UpdatedAtFilter
-  updatedAt: UpdatedAtFilter
-  _isValid: BooleanFilter
   category: StringFilter
-  tags: LinksFilter
-  url: StringFilter
-  subtitle: StringFilter
+  createdAt: CreatedAtFilter
   date: DateFilter
+  id: ItemIdFilter
+  subtitle: StringFilter
+  tags: LinksFilter
   title: StringFilter
-  OR: [AppearanceModelFilter]
+  updatedAt: UpdatedAtFilter
+  url: StringFilter
 }
 
 enum AppearanceModelOrderBy {
   _createdAt_ASC
   _createdAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-  id_ASC
-  id_DESC
   _firstPublishedAt_ASC
   _firstPublishedAt_DESC
+  _isValid_ASC
+  _isValid_DESC
   _publicationScheduledAt_ASC
   _publicationScheduledAt_DESC
-  _unpublishingScheduledAt_ASC
-  _unpublishingScheduledAt_DESC
   _publishedAt_ASC
   _publishedAt_DESC
   _status_ASC
   _status_DESC
+  _unpublishingScheduledAt_ASC
+  _unpublishingScheduledAt_DESC
   _updatedAt_ASC
   _updatedAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  _isValid_ASC
-  _isValid_DESC
   category_ASC
   category_DESC
-  url_ASC
-  url_DESC
-  subtitle_ASC
-  subtitle_DESC
+  createdAt_ASC
+  createdAt_DESC
   date_ASC
   date_DESC
+  id_ASC
+  id_DESC
+  subtitle_ASC
+  subtitle_DESC
   title_ASC
   title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  url_ASC
+  url_DESC
 }
 
 """
@@ -146,18 +146,18 @@ type CollectionMetadata {
 }
 
 enum ColorBucketType {
-  red
+  black
+  blue
+  brown
+  cyan
+  green
+  grey
   orange
   pink
-  cyan
   purple
-  blue
-  yellow
-  green
-  brown
-  grey
+  red
   white
-  black
+  yellow
 }
 
 type ColorField {
@@ -173,24 +173,9 @@ Specifies how to filter by creation datetime
 """
 input CreatedAtFilter {
   """
-  Filter records with a value that's strictly greater than the one specified
+  Search for records with an exact match (seconds are truncated)
   """
-  gt: DateTime
-
-  """
-  Filter records with a value that's less than the one specified
-  """
-  lt: DateTime
-
-  """
-  Filter records with a value that's greater than or equal to than the one specified
-  """
-  gte: DateTime
-
-  """
-  Filter records with a value that's less or equal than the one specified
-  """
-  lte: DateTime
+  eq: DateTime
 
   """
   Filter records with the specified field defined (i.e. with any value) or not
@@ -198,9 +183,24 @@ input CreatedAtFilter {
   exists: BooleanType
 
   """
-  Search for records with an exact match (seconds are truncated)
+  Filter records with a value that's strictly greater than the one specified
   """
-  eq: DateTime
+  gt: DateTime
+
+  """
+  Filter records with a value that's greater than or equal to than the one specified
+  """
+  gte: DateTime
+
+  """
+  Filter records with a value that's less than the one specified
+  """
+  lt: DateTime
+
+  """
+  Filter records with a value that's less or equal than the one specified
+  """
+  lte: DateTime
 
   """
   Exclude records with an exact match
@@ -220,24 +220,9 @@ Specifies how to filter Date fields
 """
 input DateFilter {
   """
-  Filter records with a value that's strictly greater than the one specified
+  Search for records with an exact match
   """
-  gt: Date
-
-  """
-  Filter records with a value that's less than the one specified
-  """
-  lt: Date
-
-  """
-  Filter records with a value that's greater than or equal to the one specified
-  """
-  gte: Date
-
-  """
-  Filter records with a value that's less or equal than the one specified
-  """
-  lte: Date
+  eq: Date
 
   """
   Filter records with the specified field defined (i.e. with any value) or not
@@ -245,9 +230,24 @@ input DateFilter {
   exists: BooleanType
 
   """
-  Search for records with an exact match
+  Filter records with a value that's strictly greater than the one specified
   """
-  eq: Date
+  gt: Date
+
+  """
+  Filter records with a value that's greater than or equal to the one specified
+  """
+  gte: Date
+
+  """
+  Filter records with a value that's less than the one specified
+  """
+  lt: Date
+
+  """
+  Filter records with a value that's less or equal than the one specified
+  """
+  lte: Date
 
   """
   Exclude records with an exact match
@@ -291,8 +291,8 @@ type EntryRecord {
 }
 
 enum FaviconType {
-  icon
   appleTouchIcon
+  icon
   msApplication
 }
 
@@ -309,14 +309,14 @@ type FileField {
   basename: String!
   blurUpThumb(
     """
+    Imgix transformations to apply to the image
+    """
+    imgixParams: ImgixParams
+
+    """
     Controls the "punch" value (~contrast) of the blurhash decoding algorithm (defaults to 1.0)
     """
     punch: Float = 1
-
-    """
-    Maximum image dimension (defaults to 24px)
-    """
-    size: Int = 24
 
     """
     JPEG quality (defaults to 70%)
@@ -324,9 +324,9 @@ type FileField {
     quality: Int = 70
 
     """
-    Imgix transformations to apply to the image
+    Maximum image dimension (defaults to 24px)
     """
-    imgixParams: ImgixParams
+    size: Int = 24
   ): String
   blurhash: String
   colors: [ColorField]!
@@ -391,9 +391,9 @@ input FileFilter {
   eq: UploadId
 
   """
-  Exclude records with an exact match. The specified value must be an Upload ID
+  Filter records with the specified field defined (i.e. with any value) or not
   """
-  neq: UploadId
+  exists: BooleanType
 
   """
   Filter records that have one of the specified uploads
@@ -401,14 +401,14 @@ input FileFilter {
   in: [UploadId]
 
   """
+  Exclude records with an exact match. The specified value must be an Upload ID
+  """
+  neq: UploadId
+
+  """
   Filter records that do not have one of the specified uploads
   """
   notIn: [UploadId]
-
-  """
-  Filter records with the specified field defined (i.e. with any value) or not
-  """
-  exists: BooleanType
 }
 
 """
@@ -451,6 +451,15 @@ input ImgixParams {
   [Open Imgix reference »](https://docs.imgix.com/apis/url/bg)
   """
   bg: String
+
+  """
+  Blend
+
+  Specifies the location of the blend image.
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend)
+  """
+  blend: String
 
   """
   Blend Align
@@ -583,15 +592,6 @@ input ImgixParams {
   blendY: IntType
 
   """
-  Blend
-
-  Specifies the location of the blend image.
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend)
-  """
-  blend: String
-
-  """
   Gaussian Blur
 
   Applies a gaussian blur to an image.
@@ -599,6 +599,15 @@ input ImgixParams {
   [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/blur)
   """
   blur: IntType
+
+  """
+  Border Size & Color
+
+  Applies a border to an image.
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border)
+  """
+  border: String
 
   """
   Border Bottom
@@ -619,17 +628,6 @@ input ImgixParams {
   borderLeft: IntType
 
   """
-  Inner Border Radius
-
-  Sets the inner radius of the image's border in pixels.
-
-  Depends on: `border`
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-radius-inner)
-  """
-  borderRadiusInner: String
-
-  """
   Outer Border Radius
 
   Sets the outer radius of the image's border in pixels.
@@ -639,6 +637,17 @@ input ImgixParams {
   [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-radius)
   """
   borderRadius: String
+
+  """
+  Inner Border Radius
+
+  Sets the inner radius of the image's border in pixels.
+
+  Depends on: `border`
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-radius-inner)
+  """
+  borderRadiusInner: String
 
   """
   Border Right
@@ -657,15 +666,6 @@ input ImgixParams {
   Depends on: `border`
   """
   borderTop: IntType
-
-  """
-  Border Size & Color
-
-  Applies a border to an image.
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border)
-  """
-  border: String
 
   """
   Brightness
@@ -782,6 +782,15 @@ input ImgixParams {
   dpr: FloatType
 
   """
+  Duotone
+
+  Applies a duotone effect to the source image.
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/duotone)
+  """
+  duotone: String
+
+  """
   Duotone Alpha
 
   Changes the alpha of the duotone effect atop the source image.
@@ -791,15 +800,6 @@ input ImgixParams {
   [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/duotone-alpha)
   """
   duotoneAlpha: IntType
-
-  """
-  Duotone
-
-  Applies a duotone effect to the source image.
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/duotone)
-  """
-  duotone: String
 
   """
   Exposure
@@ -853,17 +853,6 @@ input ImgixParams {
   faces: IntType
 
   """
-  Fill Color
-
-  Sets the fill color for images with additional space created by the fit setting
-
-  Depends on: `fill=solid`
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/fill/fill-color)
-  """
-  fillColor: String
-
-  """
   Fill Mode
 
   Determines how to fill in additional space created by the fit setting
@@ -873,6 +862,17 @@ input ImgixParams {
   [Open Imgix reference »](https://docs.imgix.com/apis/url/fill/fill)
   """
   fill: ImgixParamsFill
+
+  """
+  Fill Color
+
+  Sets the fill color for images with additional space created by the fit setting
+
+  Depends on: `fill=solid`
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/fill/fill-color)
+  """
+  fillColor: String
 
   """
   Resize Fit Mode
@@ -1029,6 +1029,15 @@ input ImgixParams {
   lossless: BooleanType
 
   """
+  Watermark Image Url
+
+  Specifies the location of the watermark image.
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark)
+  """
+  mark: String
+
+  """
   Watermark Alignment Mode
 
   Changes the watermark alignment relative to the parent image.
@@ -1139,13 +1148,13 @@ input ImgixParams {
   markY: IntType
 
   """
-  Watermark Image Url
+  Mask Type
 
-  Specifies the location of the watermark image.
+  Defines the type of mask and specifies the URL if that type is selected.
 
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark)
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/mask)
   """
-  mark: String
+  mask: String
 
   """
   Mask Background Color
@@ -1157,15 +1166,6 @@ input ImgixParams {
   [Open Imgix reference »](https://docs.imgix.com/apis/url/mask/mask-bg)
   """
   maskBg: String
-
-  """
-  Mask Type
-
-  Defines the type of mask and specifies the URL if that type is selected.
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/mask)
-  """
-  mask: String
 
   """
   Maximum Height
@@ -1248,6 +1248,15 @@ input ImgixParams {
   orient: IntType
 
   """
+  Padding
+
+  Pads an image.
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/pad)
+  """
+  pad: IntType
+
+  """
   Padding Bottom
 
   Sets bottom padding of an image.
@@ -1274,15 +1283,6 @@ input ImgixParams {
   Sets top padding of an image.
   """
   padTop: IntType
-
-  """
-  Padding
-
-  Pads an image.
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/pad)
-  """
-  pad: IntType
 
   """
   Pdf Page Number
@@ -1395,6 +1395,15 @@ input ImgixParams {
   transparency: ImgixParamsTransparency
 
   """
+  Trim Image
+
+  Trims the source image.
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/trim/trim)
+  """
+  trim: ImgixParamsTrim
+
+  """
   Trim Color
 
   Specifies a trim color on a trim operation.
@@ -1450,13 +1459,13 @@ input ImgixParams {
   trimTol: FloatType
 
   """
-  Trim Image
+  Text String
 
-  Trims the source image.
+  Sets the text string to render.
 
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/trim/trim)
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt)
   """
-  trim: ImgixParamsTrim
+  txt: String
 
   """
   Text Align
@@ -1536,17 +1545,6 @@ input ImgixParams {
   txtLig: IntType
 
   """
-  Text Outline Color
-
-  Specifies a text outline color.
-
-  Depends on: `txt`, `txtline`
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-line-color)
-  """
-  txtLineColor: String
-
-  """
   Text Outline
 
   Outlines the rendered text with a specified color.
@@ -1556,6 +1554,17 @@ input ImgixParams {
   [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-line)
   """
   txtLine: IntType
+
+  """
+  Text Outline Color
+
+  Specifies a text outline color.
+
+  Depends on: `txt`, `txtline`
+
+  [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-line-color)
+  """
+  txtLineColor: String
 
   """
   Text Padding
@@ -1613,15 +1622,6 @@ input ImgixParams {
   txtWidth: IntType
 
   """
-  Text String
-
-  Sets the text string to render.
-
-  [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt)
-  """
-  txt: String
-
-  """
   Unsharp Mask
 
   Sharpens the source image using an unsharp mask.
@@ -1661,54 +1661,54 @@ input ImgixParams {
 }
 
 enum ImgixParamsAuto {
+  compress
   enhance
   format
   redeye
-  compress
 }
 
 enum ImgixParamsBlendAlign {
-  top
   bottom
-  middle
-  left
-  right
   center
+  left
+  middle
+  right
+  top
 }
 
 enum ImgixParamsBlendCrop {
-  top
   bottom
+  faces
   left
   right
-  faces
+  top
 }
 
 enum ImgixParamsBlendFit {
   clamp
   clip
   crop
-  scale
   max
+  scale
 }
 
 enum ImgixParamsBlendMode {
-  color
   burn
-  dodge
+  color
   darken
   difference
+  dodge
   exclusion
   hardlight
   hue
   lighten
   luminosity
   multiply
+  normal
   overlay
   saturation
   screen
   softlight
-  normal
 }
 
 enum ImgixParamsBlendSize {
@@ -1716,32 +1716,32 @@ enum ImgixParamsBlendSize {
 }
 
 enum ImgixParamsCh {
-  width
   dpr
   saveData
+  width
 }
 
 enum ImgixParamsCrop {
-  top
   bottom
+  edges
+  entropy
+  faces
+  focalpoint
   left
   right
-  faces
-  entropy
-  edges
-  focalpoint
+  top
 }
 
 enum ImgixParamsCs {
-  srgb
   adobergb1998
-  tinysrgb
+  srgb
   strip
+  tinysrgb
 }
 
 enum ImgixParamsFill {
-  solid
   blur
+  solid
 }
 
 enum ImgixParamsFit {
@@ -1758,32 +1758,32 @@ enum ImgixParamsFit {
 
 enum ImgixParamsFlip {
   h
-  v
   hv
+  v
 }
 
 enum ImgixParamsFm {
   gif
-  jpg
   jp2
+  jpg
   json
   jxr
-  pjpg
   mp4
+  pjpg
   png
   png8
   png32
-  webp
   webm
+  webp
 }
 
 enum ImgixParamsMarkAlign {
-  top
-  middle
   bottom
-  left
   center
+  left
+  middle
   right
+  top
 }
 
 enum ImgixParamsMarkFit {
@@ -1809,19 +1809,19 @@ enum ImgixParamsTrim {
 }
 
 enum ImgixParamsTxtAlign {
-  top
-  middle
   bottom
-  left
   center
+  left
+  middle
   right
+  top
 }
 
 enum ImgixParamsTxtClip {
-  start
-  middle
-  end
   ellipsis
+  end
+  middle
+  start
 }
 
 enum ImgixParamsTxtFit {
@@ -1855,14 +1855,14 @@ input ItemIdFilter {
   eq: ItemId
 
   """
-  Exclude the record with the specified ID
-  """
-  neq: ItemId
-
-  """
   Search records with the specified IDs
   """
   in: [ItemId]
+
+  """
+  Exclude the record with the specified ID
+  """
+  neq: ItemId
 
   """
   Search records that do not have the specified IDs
@@ -1872,8 +1872,8 @@ input ItemIdFilter {
 
 enum ItemStatus {
   draft
-  updated
   published
+  updated
 }
 
 scalar JsonField
@@ -1882,11 +1882,6 @@ scalar JsonField
 Specifies how to filter Multiple-links fields
 """
 input LinksFilter {
-  """
-  Search for records with an exact match. The specified values must be Record IDs
-  """
-  eq: [ItemId]
-
   """
   Filter records linked to all of the specified records. The specified values must be Record IDs
   """
@@ -1898,22 +1893,27 @@ input LinksFilter {
   anyIn: [ItemId]
 
   """
-  Filter records not linked to any of the specified records. The specified values must be Record IDs
+  Search for records with an exact match. The specified values must be Record IDs
   """
-  notIn: [ItemId]
+  eq: [ItemId]
 
   """
   Filter records with the specified field defined (i.e. with any value) or not
   """
   exists: BooleanType
+
+  """
+  Filter records not linked to any of the specified records. The specified values must be Record IDs
+  """
+  notIn: [ItemId]
 }
 
 scalar MetaTagAttributes
 
 enum MuxThumbnailFormatType {
+  gif
   jpg
   png
-  gif
 }
 
 """
@@ -1932,51 +1932,51 @@ input OrientationFilter {
 }
 
 input PageModelFilter {
+  OR: [PageModelFilter]
   _createdAt: CreatedAtFilter
-  createdAt: CreatedAtFilter
-  id: ItemIdFilter
   _firstPublishedAt: PublishedAtFilter
+  _isValid: BooleanFilter
   _publicationScheduledAt: PublishedAtFilter
-  _unpublishingScheduledAt: PublishedAtFilter
   _publishedAt: PublishedAtFilter
   _status: StatusFilter
+  _unpublishingScheduledAt: PublishedAtFilter
   _updatedAt: UpdatedAtFilter
-  updatedAt: UpdatedAtFilter
-  _isValid: BooleanFilter
-  subtitle: StringFilter
   content: TextFilter
+  createdAt: CreatedAtFilter
+  id: ItemIdFilter
   slug: SlugFilter
+  subtitle: StringFilter
   title: StringFilter
-  OR: [PageModelFilter]
+  updatedAt: UpdatedAtFilter
 }
 
 enum PageModelOrderBy {
   _createdAt_ASC
   _createdAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-  id_ASC
-  id_DESC
   _firstPublishedAt_ASC
   _firstPublishedAt_DESC
+  _isValid_ASC
+  _isValid_DESC
   _publicationScheduledAt_ASC
   _publicationScheduledAt_DESC
-  _unpublishingScheduledAt_ASC
-  _unpublishingScheduledAt_DESC
   _publishedAt_ASC
   _publishedAt_DESC
   _status_ASC
   _status_DESC
+  _unpublishingScheduledAt_ASC
+  _unpublishingScheduledAt_DESC
   _updatedAt_ASC
   _updatedAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  _isValid_ASC
-  _isValid_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
   subtitle_ASC
   subtitle_DESC
   title_ASC
   title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 """
@@ -2021,14 +2021,14 @@ Specifies how to filter by position (sorted and tree-like collections)
 """
 input PositionFilter {
   """
+  Search for records with an exact match
+  """
+  eq: IntType
+
+  """
   Filter records with a value that's strictly greater than the one specified
   """
   gt: IntType
-
-  """
-  Filter records with a value that's less than the one specified
-  """
-  lt: IntType
 
   """
   Filter records with a value that's greater than or equal to the one specified
@@ -2036,14 +2036,14 @@ input PositionFilter {
   gte: IntType
 
   """
+  Filter records with a value that's less than the one specified
+  """
+  lt: IntType
+
+  """
   Filter records with a value that's less or equal than the one specified
   """
   lte: IntType
-
-  """
-  Search for records with an exact match
-  """
-  eq: IntType
 
   """
   Exclude records with an exact match
@@ -2052,53 +2052,53 @@ input PositionFilter {
 }
 
 input PostModelFilter {
+  OR: [PostModelFilter]
   _createdAt: CreatedAtFilter
-  createdAt: CreatedAtFilter
-  id: ItemIdFilter
   _firstPublishedAt: PublishedAtFilter
+  _isValid: BooleanFilter
   _publicationScheduledAt: PublishedAtFilter
-  _unpublishingScheduledAt: PublishedAtFilter
   _publishedAt: PublishedAtFilter
   _status: StatusFilter
+  _unpublishingScheduledAt: PublishedAtFilter
   _updatedAt: UpdatedAtFilter
-  updatedAt: UpdatedAtFilter
-  _isValid: BooleanFilter
-  tags: LinksFilter
-  cover: FileFilter
-  subtitle: StringFilter
-  slug: SlugFilter
   content: TextFilter
+  cover: FileFilter
+  createdAt: CreatedAtFilter
+  id: ItemIdFilter
+  slug: SlugFilter
+  subtitle: StringFilter
+  tags: LinksFilter
   title: StringFilter
-  OR: [PostModelFilter]
+  updatedAt: UpdatedAtFilter
 }
 
 enum PostModelOrderBy {
   _createdAt_ASC
   _createdAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-  id_ASC
-  id_DESC
   _firstPublishedAt_ASC
   _firstPublishedAt_DESC
+  _isValid_ASC
+  _isValid_DESC
   _publicationScheduledAt_ASC
   _publicationScheduledAt_DESC
-  _unpublishingScheduledAt_ASC
-  _unpublishingScheduledAt_DESC
   _publishedAt_ASC
   _publishedAt_DESC
   _status_ASC
   _status_DESC
+  _unpublishingScheduledAt_ASC
+  _unpublishingScheduledAt_DESC
   _updatedAt_ASC
   _updatedAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  _isValid_ASC
-  _isValid_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
   subtitle_ASC
   subtitle_DESC
   title_ASC
   title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 """
@@ -2145,24 +2145,9 @@ Specifies how to filter by publication datetime
 """
 input PublishedAtFilter {
   """
-  Filter records with a value that's strictly greater than the one specified
+  Search for records with an exact match (seconds are truncated)
   """
-  gt: DateTime
-
-  """
-  Filter records with a value that's less than the one specified
-  """
-  lt: DateTime
-
-  """
-  Filter records with a value that's greater than or equal to than the one specified
-  """
-  gte: DateTime
-
-  """
-  Filter records with a value that's less or equal than the one specified
-  """
-  lte: DateTime
+  eq: DateTime
 
   """
   Filter records with the specified field defined (i.e. with any value) or not
@@ -2170,9 +2155,24 @@ input PublishedAtFilter {
   exists: BooleanType
 
   """
-  Search for records with an exact match (seconds are truncated)
+  Filter records with a value that's strictly greater than the one specified
   """
-  eq: DateTime
+  gt: DateTime
+
+  """
+  Filter records with a value that's greater than or equal to than the one specified
+  """
+  gte: DateTime
+
+  """
+  Filter records with a value that's less than the one specified
+  """
+  lt: DateTime
+
+  """
+  Filter records with a value that's less or equal than the one specified
+  """
+  lte: DateTime
 
   """
   Exclude records with an exact match
@@ -2188,66 +2188,72 @@ type Query {
   Returns meta information regarding a record collection
   """
   _allAppearancesMeta(
+    filter: AppearanceModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: AppearanceModelFilter
   ): CollectionMetadata!
 
   """
   Returns meta information regarding a record collection
   """
   _allPagesMeta(
+    filter: PageModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: PageModelFilter
   ): CollectionMetadata!
 
   """
   Returns meta information regarding a record collection
   """
   _allPostsMeta(
+    filter: PostModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: PostModelFilter
   ): CollectionMetadata!
 
   """
   Returns meta information regarding a record collection
   """
   _allShowcasesMeta(
+    filter: ShowcaseModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: ShowcaseModelFilter
   ): CollectionMetadata!
 
   """
   Returns meta information regarding a record collection
   """
   _allTagsMeta(
+    filter: TagModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: TagModelFilter
   ): CollectionMetadata!
 
   """
   Returns meta information regarding an assets collection
   """
   _allUploadsMeta(
+    filter: UploadFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: UploadFilter
   ): CollectionMetadata
 
   """
@@ -2274,143 +2280,150 @@ type Query {
   Returns a collection of records
   """
   allAppearances(
-    """
-    The locale to use to fetch the field's content
-    """
-    locale: SiteLocale
-
-    """
-    Skip the first results
-    """
-    skip: IntType
+    filter: AppearanceModelFilter
 
     """
     Limit the number of results
     """
     first: IntType = 20
-    filter: AppearanceModelFilter
+
+    """
+    The locale to use to fetch the field's content
+    """
+    locale: SiteLocale
     orderBy: [AppearanceModelOrderBy] = [_updatedAt_DESC]
+
+    """
+    Skip the first results
+    """
+    skip: IntType
   ): [AppearanceRecord!]!
 
   """
   Returns a collection of records
   """
   allPages(
-    """
-    The locale to use to fetch the field's content
-    """
-    locale: SiteLocale
-
-    """
-    Skip the first results
-    """
-    skip: IntType
+    filter: PageModelFilter
 
     """
     Limit the number of results
     """
     first: IntType = 20
-    filter: PageModelFilter
+
+    """
+    The locale to use to fetch the field's content
+    """
+    locale: SiteLocale
     orderBy: [PageModelOrderBy] = [_updatedAt_DESC]
+
+    """
+    Skip the first results
+    """
+    skip: IntType
   ): [PageRecord!]!
 
   """
   Returns a collection of records
   """
   allPosts(
-    """
-    The locale to use to fetch the field's content
-    """
-    locale: SiteLocale
-
-    """
-    Skip the first results
-    """
-    skip: IntType
+    filter: PostModelFilter
 
     """
     Limit the number of results
     """
     first: IntType = 20
-    filter: PostModelFilter
+
+    """
+    The locale to use to fetch the field's content
+    """
+    locale: SiteLocale
     orderBy: [PostModelOrderBy] = [_updatedAt_DESC]
+
+    """
+    Skip the first results
+    """
+    skip: IntType
   ): [PostRecord!]!
 
   """
   Returns a collection of records
   """
   allShowcases(
-    """
-    The locale to use to fetch the field's content
-    """
-    locale: SiteLocale
-
-    """
-    Skip the first results
-    """
-    skip: IntType
+    filter: ShowcaseModelFilter
 
     """
     Limit the number of results
     """
     first: IntType = 20
-    filter: ShowcaseModelFilter
+
+    """
+    The locale to use to fetch the field's content
+    """
+    locale: SiteLocale
     orderBy: [ShowcaseModelOrderBy] = [position_ASC]
+
+    """
+    Skip the first results
+    """
+    skip: IntType
   ): [ShowcaseRecord!]!
 
   """
   Returns a collection of records
   """
   allTags(
-    """
-    The locale to use to fetch the field's content
-    """
-    locale: SiteLocale
-
-    """
-    Skip the first results
-    """
-    skip: IntType
+    filter: TagModelFilter
 
     """
     Limit the number of results
     """
     first: IntType = 20
-    filter: TagModelFilter
+
+    """
+    The locale to use to fetch the field's content
+    """
+    locale: SiteLocale
     orderBy: [TagModelOrderBy] = [_updatedAt_DESC]
+
+    """
+    Skip the first results
+    """
+    skip: IntType
   ): [TagRecord!]!
 
   """
   Returns a collection of assets
   """
   allUploads(
-    """
-    The locale to use to fetch the field's content
-    """
-    locale: SiteLocale
-
-    """
-    Skip the first results
-    """
-    skip: IntType
+    filter: UploadFilter
 
     """
     Limit the number of results
     """
     first: IntType = 20
-    filter: UploadFilter
+
+    """
+    The locale to use to fetch the field's content
+    """
+    locale: SiteLocale
     orderBy: [UploadOrderBy] = [_createdAt_DESC]
+
+    """
+    Skip the first results
+    """
+    skip: IntType
   ): [FileField!]!
 
   """
   Returns a specific record
   """
   appearance(
+    filter: AppearanceModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: AppearanceModelFilter
     orderBy: [AppearanceModelOrderBy] = [_updatedAt_DESC]
   ): AppearanceRecord
 
@@ -2418,11 +2431,12 @@ type Query {
   Returns a specific record
   """
   page(
+    filter: PageModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: PageModelFilter
     orderBy: [PageModelOrderBy] = [_updatedAt_DESC]
   ): PageRecord
 
@@ -2430,11 +2444,12 @@ type Query {
   Returns a specific record
   """
   post(
+    filter: PostModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: PostModelFilter
     orderBy: [PostModelOrderBy] = [_updatedAt_DESC]
   ): PostRecord
 
@@ -2442,11 +2457,12 @@ type Query {
   Returns a specific record
   """
   showcase(
+    filter: ShowcaseModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: ShowcaseModelFilter
     orderBy: [ShowcaseModelOrderBy] = [position_ASC]
   ): ShowcaseRecord
 
@@ -2454,11 +2470,12 @@ type Query {
   Returns a specific record
   """
   tag(
+    filter: TagModelFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: TagModelFilter
     orderBy: [TagModelOrderBy] = [_updatedAt_DESC]
   ): TagRecord
 
@@ -2466,11 +2483,12 @@ type Query {
   Returns a specific asset
   """
   upload(
+    filter: UploadFilter
+
     """
     The locale to use to fetch the field's content
     """
     locale: SiteLocale
-    filter: UploadFilter
     orderBy: [UploadOrderBy] = [_createdAt_DESC]
   ): FileField
 }
@@ -2485,14 +2503,14 @@ input ResolutionFilter {
   eq: ResolutionType
 
   """
-  Exclude uploads with the specified resolution
-  """
-  neq: ResolutionType
-
-  """
   Search uploads with the specified resolutions
   """
   in: [ResolutionType]
+
+  """
+  Exclude uploads with the specified resolution
+  """
+  neq: ResolutionType
 
   """
   Search uploads without the specified resolutions
@@ -2502,9 +2520,9 @@ input ResolutionFilter {
 
 enum ResolutionType {
   icon
-  small
-  medium
   large
+  medium
+  small
 }
 
 type ResponsiveImage {
@@ -2529,57 +2547,57 @@ type SeoField {
 }
 
 input ShowcaseModelFilter {
+  OR: [ShowcaseModelFilter]
   _createdAt: CreatedAtFilter
-  createdAt: CreatedAtFilter
-  id: ItemIdFilter
   _firstPublishedAt: PublishedAtFilter
-  position: PositionFilter
+  _isValid: BooleanFilter
   _publicationScheduledAt: PublishedAtFilter
-  _unpublishingScheduledAt: PublishedAtFilter
   _publishedAt: PublishedAtFilter
   _status: StatusFilter
+  _unpublishingScheduledAt: PublishedAtFilter
   _updatedAt: UpdatedAtFilter
-  updatedAt: UpdatedAtFilter
-  _isValid: BooleanFilter
+  createdAt: CreatedAtFilter
+  id: ItemIdFilter
+  image: FileFilter
+  position: PositionFilter
   subtitle: StringFilter
   tags: LinksFilter
-  url: StringFilter
-  image: FileFilter
   title: StringFilter
-  OR: [ShowcaseModelFilter]
+  updatedAt: UpdatedAtFilter
+  url: StringFilter
 }
 
 enum ShowcaseModelOrderBy {
   _createdAt_ASC
   _createdAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-  id_ASC
-  id_DESC
   _firstPublishedAt_ASC
   _firstPublishedAt_DESC
-  position_ASC
-  position_DESC
+  _isValid_ASC
+  _isValid_DESC
   _publicationScheduledAt_ASC
   _publicationScheduledAt_DESC
-  _unpublishingScheduledAt_ASC
-  _unpublishingScheduledAt_DESC
   _publishedAt_ASC
   _publishedAt_DESC
   _status_ASC
   _status_DESC
+  _unpublishingScheduledAt_ASC
+  _unpublishingScheduledAt_DESC
   _updatedAt_ASC
   _updatedAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  _isValid_ASC
-  _isValid_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  position_ASC
+  position_DESC
   subtitle_ASC
   subtitle_DESC
-  url_ASC
-  url_DESC
   title_ASC
   title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  url_ASC
+  url_DESC
 }
 
 """
@@ -2646,14 +2664,14 @@ input SlugFilter {
   eq: String
 
   """
-  Exclude records with an exact match
-  """
-  neq: String
-
-  """
   Filter records that have one of the specified slugs
   """
   in: [String]
+
+  """
+  Exclude records with an exact match
+  """
+  neq: String
 
   """
   Filter records that do have one of the specified slugs
@@ -2671,14 +2689,14 @@ input StatusFilter {
   eq: ItemStatus
 
   """
-  Exclude the record with the specified status
-  """
-  neq: ItemStatus
-
-  """
   Search records with the specified statuses
   """
   in: [ItemStatus]
+
+  """
+  Exclude the record with the specified status
+  """
+  neq: ItemStatus
 
   """
   Search records without the specified statuses
@@ -2691,29 +2709,14 @@ Specifies how to filter Single-line string fields
 """
 input StringFilter {
   """
-  Filter records based on a regular expression
-  """
-  matches: StringMatchesFilter
-
-  """
-  Exclude records based on a regular expression
-  """
-  notMatches: StringMatchesFilter
-
-  """
-  Filter records with the specified field set as blank (null or empty string)
-  """
-  isBlank: BooleanType
-
-  """
   Search for records with an exact match
   """
   eq: String
 
   """
-  Exclude records with an exact match
+  Filter records with the specified field defined (i.e. with any value) or not
   """
-  neq: String
+  exists: BooleanType
 
   """
   Filter records that equal one of the specified values
@@ -2721,19 +2724,34 @@ input StringFilter {
   in: [String]
 
   """
+  Filter records with the specified field set as blank (null or empty string)
+  """
+  isBlank: BooleanType
+
+  """
+  Filter records based on a regular expression
+  """
+  matches: StringMatchesFilter
+
+  """
+  Exclude records with an exact match
+  """
+  neq: String
+
+  """
   Filter records that do not equal one of the specified values
   """
   notIn: [String]
 
   """
-  Filter records with the specified field defined (i.e. with any value) or not
+  Exclude records based on a regular expression
   """
-  exists: BooleanType
+  notMatches: StringMatchesFilter
 }
 
 input StringMatchesFilter {
-  pattern: String!
   caseSensitive: BooleanType = false
+  pattern: String!
   regexp: BooleanType = true
 }
 
@@ -2744,47 +2762,47 @@ type Tag {
 }
 
 input TagModelFilter {
+  OR: [TagModelFilter]
   _createdAt: CreatedAtFilter
-  createdAt: CreatedAtFilter
-  id: ItemIdFilter
   _firstPublishedAt: PublishedAtFilter
+  _isValid: BooleanFilter
   _publicationScheduledAt: PublishedAtFilter
-  _unpublishingScheduledAt: PublishedAtFilter
   _publishedAt: PublishedAtFilter
   _status: StatusFilter
+  _unpublishingScheduledAt: PublishedAtFilter
   _updatedAt: UpdatedAtFilter
-  updatedAt: UpdatedAtFilter
-  _isValid: BooleanFilter
+  createdAt: CreatedAtFilter
+  id: ItemIdFilter
   slug: SlugFilter
   title: StringFilter
-  OR: [TagModelFilter]
+  updatedAt: UpdatedAtFilter
 }
 
 enum TagModelOrderBy {
   _createdAt_ASC
   _createdAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-  id_ASC
-  id_DESC
   _firstPublishedAt_ASC
   _firstPublishedAt_DESC
+  _isValid_ASC
+  _isValid_DESC
   _publicationScheduledAt_ASC
   _publicationScheduledAt_DESC
-  _unpublishingScheduledAt_ASC
-  _unpublishingScheduledAt_DESC
   _publishedAt_ASC
   _publishedAt_DESC
   _status_ASC
   _status_DESC
+  _unpublishingScheduledAt_ASC
+  _unpublishingScheduledAt_DESC
   _updatedAt_ASC
   _updatedAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  _isValid_ASC
-  _isValid_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
   title_ASC
   title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 """
@@ -2822,6 +2840,16 @@ Specifies how to filter text fields
 """
 input TextFilter {
   """
+  Filter records with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+
+  """
+  Filter records with the specified field set as blank (null or empty string)
+  """
+  isBlank: BooleanType
+
+  """
   Filter records based on a regular expression
   """
   matches: StringMatchesFilter
@@ -2830,16 +2858,6 @@ input TextFilter {
   Exclude records based on a regular expression
   """
   notMatches: StringMatchesFilter
-
-  """
-  Filter records with the specified field set as blank (null or empty string)
-  """
-  isBlank: BooleanType
-
-  """
-  Filter records with the specified field defined (i.e. with any value) or not
-  """
-  exists: BooleanType
 }
 
 """
@@ -2852,14 +2870,14 @@ input TypeFilter {
   eq: UploadType
 
   """
-  Exclude uploads with the specified type
-  """
-  neq: UploadType
-
-  """
   Search uploads with the specified types
   """
   in: [UploadType]
+
+  """
+  Exclude uploads with the specified type
+  """
+  neq: UploadType
 
   """
   Search uploads without the specified types
@@ -2872,24 +2890,9 @@ Specifies how to filter by update datetime
 """
 input UpdatedAtFilter {
   """
-  Filter records with a value that's strictly greater than the one specified
+  Search for records with an exact match (seconds are truncated)
   """
-  gt: DateTime
-
-  """
-  Filter records with a value that's less than the one specified
-  """
-  lt: DateTime
-
-  """
-  Filter records with a value that's greater than or equal to than the one specified
-  """
-  gte: DateTime
-
-  """
-  Filter records with a value that's less or equal than the one specified
-  """
-  lte: DateTime
+  eq: DateTime
 
   """
   Filter records with the specified field defined (i.e. with any value) or not
@@ -2897,9 +2900,24 @@ input UpdatedAtFilter {
   exists: BooleanType
 
   """
-  Search for records with an exact match (seconds are truncated)
+  Filter records with a value that's strictly greater than the one specified
   """
-  eq: DateTime
+  gt: DateTime
+
+  """
+  Filter records with a value that's greater than or equal to than the one specified
+  """
+  gte: DateTime
+
+  """
+  Filter records with a value that's less than the one specified
+  """
+  lt: DateTime
+
+  """
+  Filter records with a value that's less or equal than the one specified
+  """
+  lte: DateTime
 
   """
   Exclude records with an exact match
@@ -2912,24 +2930,14 @@ Specifies how to filter by default alt
 """
 input UploadAltFilter {
   """
-  Filter uploads based on a regular expression
-  """
-  matches: StringMatchesFilter
-
-  """
-  Exclude uploads based on a regular expression
-  """
-  notMatches: StringMatchesFilter
-
-  """
   Search the uploads with the specified alt
   """
   eq: String
 
   """
-  Exclude the uploads with the specified alt
+  Filter uploads with the specified field defined (i.e. with any value) or not
   """
-  neq: String
+  exists: BooleanType
 
   """
   Search uploads with the specified values as default alt
@@ -2937,20 +2945,35 @@ input UploadAltFilter {
   in: [String]
 
   """
+  Filter uploads based on a regular expression
+  """
+  matches: StringMatchesFilter
+
+  """
+  Exclude the uploads with the specified alt
+  """
+  neq: String
+
+  """
   Search uploads that do not have the specified values as default alt
   """
   notIn: [String]
 
   """
-  Filter uploads with the specified field defined (i.e. with any value) or not
+  Exclude uploads based on a regular expression
   """
-  exists: BooleanType
+  notMatches: StringMatchesFilter
 }
 
 """
 Specifies how to filter by auhtor
 """
 input UploadAuthorFilter {
+  """
+  Filter uploads with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+
   """
   Filter uploads based on a regular expression
   """
@@ -2960,11 +2983,6 @@ input UploadAuthorFilter {
   Exclude uploads based on a regular expression
   """
   notMatches: StringMatchesFilter
-
-  """
-  Filter uploads with the specified field defined (i.e. with any value) or not
-  """
-  exists: BooleanType
 }
 
 """
@@ -2987,11 +3005,6 @@ Specifies how to filter by colors
 """
 input UploadColorsFilter {
   """
-  Filter uploads that have the specified colors
-  """
-  contains: ColorBucketType
-
-  """
   Filter uploads that have all of the specified colors
   """
   allIn: [ColorBucketType]
@@ -3002,20 +3015,30 @@ input UploadColorsFilter {
   anyIn: [ColorBucketType]
 
   """
-  Filter uploads that do not have any of the specified colors
+  Filter uploads that have the specified colors
   """
-  notIn: [ColorBucketType]
+  contains: ColorBucketType
 
   """
   Search for uploads with an exact match
   """
   eq: [ColorBucketType]
+
+  """
+  Filter uploads that do not have any of the specified colors
+  """
+  notIn: [ColorBucketType]
 }
 
 """
 Specifies how to filter by copyright
 """
 input UploadCopyrightFilter {
+  """
+  Filter records with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+
   """
   Filter uploads based on a regular expression
   """
@@ -3025,11 +3048,6 @@ input UploadCopyrightFilter {
   Exclude uploads based on a regular expression
   """
   notMatches: StringMatchesFilter
-
-  """
-  Filter records with the specified field defined (i.e. with any value) or not
-  """
-  exists: BooleanType
 }
 
 """
@@ -3042,9 +3060,14 @@ input UploadCreatedAtFilter {
   eq: DateTime
 
   """
-  Exclude uploads with an exact match
+  Filter uploads with a value that's strictly greater than the one specified
   """
-  neq: DateTime
+  gt: DateTime
+
+  """
+  Filter uploads with a value that's greater than or equal to the one specified
+  """
+  gte: DateTime
 
   """
   Filter uploads with a value that's less than the one specified
@@ -3057,14 +3080,9 @@ input UploadCreatedAtFilter {
   lte: DateTime
 
   """
-  Filter uploads with a value that's strictly greater than the one specified
+  Exclude uploads with an exact match
   """
-  gt: DateTime
-
-  """
-  Filter uploads with a value that's greater than or equal to the one specified
-  """
-  gte: DateTime
+  neq: DateTime
 }
 
 """
@@ -3083,30 +3101,30 @@ input UploadFilenameFilter {
 }
 
 input UploadFilter {
-  type: TypeFilter
-  inUse: InUseFilter
-  resolution: ResolutionFilter
-  size: UploadSizeFilter
-  tags: UploadTagsFilter
-  smartTags: UploadTagsFilter
-  colors: UploadColorsFilter
-  orientation: OrientationFilter
-  id: UploadIdFilter
-  mimeType: UploadMimeTypeFilter
-  format: UploadFormatFilter
-  height: UploadHeightFilter
-  width: UploadWidthFilter
-  alt: UploadAltFilter
-  title: UploadTitleFilter
-  notes: UploadNotesFilter
-  md5: UploadMd5Filter
-  author: UploadAuthorFilter
-  copyright: UploadCopyrightFilter
-  basename: UploadBasenameFilter
-  filename: UploadFilenameFilter
+  OR: [UploadFilter]
   _createdAt: UploadCreatedAtFilter
   _updatedAt: UploadUpdatedAtFilter
-  OR: [UploadFilter]
+  alt: UploadAltFilter
+  author: UploadAuthorFilter
+  basename: UploadBasenameFilter
+  colors: UploadColorsFilter
+  copyright: UploadCopyrightFilter
+  filename: UploadFilenameFilter
+  format: UploadFormatFilter
+  height: UploadHeightFilter
+  id: UploadIdFilter
+  inUse: InUseFilter
+  md5: UploadMd5Filter
+  mimeType: UploadMimeTypeFilter
+  notes: UploadNotesFilter
+  orientation: OrientationFilter
+  resolution: ResolutionFilter
+  size: UploadSizeFilter
+  smartTags: UploadTagsFilter
+  tags: UploadTagsFilter
+  title: UploadTitleFilter
+  type: TypeFilter
+  width: UploadWidthFilter
 }
 
 """
@@ -3119,14 +3137,14 @@ input UploadFormatFilter {
   eq: String
 
   """
-  Exclude the asset with the specified format
-  """
-  neq: String
-
-  """
   Search assets with the specified formats
   """
   in: [String]
+
+  """
+  Exclude the asset with the specified format
+  """
+  neq: String
 
   """
   Search assets that do not have the specified formats
@@ -3139,9 +3157,19 @@ Specifies how to filter by height
 """
 input UploadHeightFilter {
   """
+  Search assets with the specified height
+  """
+  eq: IntType
+
+  """
   Search all assets larger than the specified height
   """
   gt: IntType
+
+  """
+  Search all assets larger or equal to the specified height
+  """
+  gte: IntType
 
   """
   Search all assets smaller than the specified height
@@ -3151,17 +3179,7 @@ input UploadHeightFilter {
   """
   Search all assets larger or equal to the specified height
   """
-  gte: IntType
-
-  """
-  Search all assets larger or equal to the specified height
-  """
   lte: IntType
-
-  """
-  Search assets with the specified height
-  """
-  eq: IntType
 
   """
   Search assets that do not have the specified height
@@ -3181,14 +3199,14 @@ input UploadIdFilter {
   eq: UploadId
 
   """
-  Exclude the asset with the specified ID
-  """
-  neq: UploadId
-
-  """
   Search assets with the specified IDs
   """
   in: [UploadId]
+
+  """
+  Exclude the asset with the specified ID
+  """
+  neq: UploadId
 
   """
   Search assets that do not have the specified IDs
@@ -3206,14 +3224,14 @@ input UploadMd5Filter {
   eq: String
 
   """
-  Exclude the asset with the specified MD5
-  """
-  neq: String
-
-  """
   Search assets with the specified MD5s
   """
   in: [String]
+
+  """
+  Exclude the asset with the specified MD5
+  """
+  neq: String
 
   """
   Search assets that do not have the specified MD5s
@@ -3226,24 +3244,9 @@ Specifies how to filter by mime type
 """
 input UploadMimeTypeFilter {
   """
-  Filter uploads based on a regular expression
-  """
-  matches: StringMatchesFilter
-
-  """
-  Exclude uploads based on a regular expression
-  """
-  notMatches: StringMatchesFilter
-
-  """
   Search the asset with the specified mime type
   """
   eq: String
-
-  """
-  Exclude the asset with the specified mime type
-  """
-  neq: String
 
   """
   Search assets with the specified mime types
@@ -3251,15 +3254,35 @@ input UploadMimeTypeFilter {
   in: [String]
 
   """
+  Filter uploads based on a regular expression
+  """
+  matches: StringMatchesFilter
+
+  """
+  Exclude the asset with the specified mime type
+  """
+  neq: String
+
+  """
   Search assets that do not have the specified mime types
   """
   notIn: [String]
+
+  """
+  Exclude uploads based on a regular expression
+  """
+  notMatches: StringMatchesFilter
 }
 
 """
 Specifies how to filter by notes
 """
 input UploadNotesFilter {
+  """
+  Filter records with the specified field defined (i.e. with any value) or not
+  """
+  exists: BooleanType
+
   """
   Filter uploads based on a regular expression
   """
@@ -3269,32 +3292,27 @@ input UploadNotesFilter {
   Exclude uploads based on a regular expression
   """
   notMatches: StringMatchesFilter
-
-  """
-  Filter records with the specified field defined (i.e. with any value) or not
-  """
-  exists: BooleanType
 }
 
 enum UploadOrderBy {
   _createdAt_ASC
   _createdAt_DESC
-  size_ASC
-  size_DESC
-  resolution_ASC
-  resolution_DESC
-  filename_ASC
-  filename_DESC
-  basename_ASC
-  basename_DESC
-  mimeType_ASC
-  mimeType_DESC
-  format_ASC
-  format_DESC
   _updatedAt_ASC
   _updatedAt_DESC
+  basename_ASC
+  basename_DESC
+  filename_ASC
+  filename_DESC
+  format_ASC
+  format_DESC
   id_ASC
   id_DESC
+  mimeType_ASC
+  mimeType_DESC
+  resolution_ASC
+  resolution_DESC
+  size_ASC
+  size_DESC
 }
 
 enum UploadOrientation {
@@ -3308,9 +3326,19 @@ Specifies how to filter by size
 """
 input UploadSizeFilter {
   """
+  Search assets with the specified size
+  """
+  eq: IntType
+
+  """
   Search all assets larger than the specified size
   """
   gt: IntType
+
+  """
+  Search all assets larger or equal to the specified size
+  """
+  gte: IntType
 
   """
   Search all assets smaller than the specified size
@@ -3320,17 +3348,7 @@ input UploadSizeFilter {
   """
   Search all assets larger or equal to the specified size
   """
-  gte: IntType
-
-  """
-  Search all assets larger or equal to the specified size
-  """
   lte: IntType
-
-  """
-  Search assets with the specified size
-  """
-  eq: IntType
 
   """
   Search assets that do not have the specified size
@@ -3343,11 +3361,6 @@ Specifies how to filter by tags
 """
 input UploadTagsFilter {
   """
-  Filter uploads linked to the specified tag
-  """
-  contains: String
-
-  """
   Filter uploads linked to all of the specified tags
   """
   allIn: [String]
@@ -3358,14 +3371,19 @@ input UploadTagsFilter {
   anyIn: [String]
 
   """
-  Filter uploads not linked to any of the specified tags
+  Filter uploads linked to the specified tag
   """
-  notIn: [String]
+  contains: String
 
   """
   Search for uploads with an exact match
   """
   eq: [String]
+
+  """
+  Filter uploads not linked to any of the specified tags
+  """
+  notIn: [String]
 }
 
 """
@@ -3373,24 +3391,14 @@ Specifies how to filter by default title
 """
 input UploadTitleFilter {
   """
-  Filter uploads based on a regular expression
-  """
-  matches: StringMatchesFilter
-
-  """
-  Exclude uploads based on a regular expression
-  """
-  notMatches: StringMatchesFilter
-
-  """
   Search the asset with the specified title
   """
   eq: String
 
   """
-  Exclude the asset with the specified title
+  Filter assets with the specified field defined (i.e. with any value) or not
   """
-  neq: String
+  exists: BooleanType
 
   """
   Search assets with the specified as default title
@@ -3398,25 +3406,35 @@ input UploadTitleFilter {
   in: [String]
 
   """
+  Filter uploads based on a regular expression
+  """
+  matches: StringMatchesFilter
+
+  """
+  Exclude the asset with the specified title
+  """
+  neq: String
+
+  """
   Search assets that do not have the specified as default title
   """
   notIn: [String]
 
   """
-  Filter assets with the specified field defined (i.e. with any value) or not
+  Exclude uploads based on a regular expression
   """
-  exists: BooleanType
+  notMatches: StringMatchesFilter
 }
 
 enum UploadType {
-  image
-  audio
-  video
-  richtext
-  presentation
-  spreadsheet
-  pdfdocument
   archive
+  audio
+  image
+  pdfdocument
+  presentation
+  richtext
+  spreadsheet
+  video
 }
 
 """
@@ -3429,9 +3447,14 @@ input UploadUpdatedAtFilter {
   eq: DateTime
 
   """
-  Exclude uploads with an exact match
+  Filter uploads with a value that's strictly greater than the one specified
   """
-  neq: DateTime
+  gt: DateTime
+
+  """
+  Filter uploads with a value that's greater than or equal to the one specified
+  """
+  gte: DateTime
 
   """
   Filter uploads with a value that's less than the one specified
@@ -3444,14 +3467,9 @@ input UploadUpdatedAtFilter {
   lte: DateTime
 
   """
-  Filter uploads with a value that's strictly greater than the one specified
+  Exclude uploads with an exact match
   """
-  gt: DateTime
-
-  """
-  Filter uploads with a value that's greater than or equal to the one specified
-  """
-  gte: DateTime
+  neq: DateTime
 }
 
 type UploadVideoField {
@@ -3459,14 +3477,14 @@ type UploadVideoField {
   framerate: Int!
   mp4Url(
     """
-    Pick highest resolution available up to the specified argument
-    """
-    res: VideoMp4Res
-
-    """
     Pick the exact resolution quality specified in the argument
     """
     exactRes: VideoMp4Res
+
+    """
+    Pick highest resolution available up to the specified argument
+    """
+    res: VideoMp4Res
   ): String
   muxAssetId: String!
   muxPlaybackId: String!
@@ -3484,9 +3502,19 @@ Specifies how to filter by width
 """
 input UploadWidthFilter {
   """
+  Search assets with the specified width
+  """
+  eq: IntType
+
+  """
   Search all assets larger than the specified width
   """
   gt: IntType
+
+  """
+  Search all assets larger or equal to the specified width
+  """
+  gte: IntType
 
   """
   Search all assets smaller than the specified width
@@ -3496,17 +3524,7 @@ input UploadWidthFilter {
   """
   Search all assets larger or equal to the specified width
   """
-  gte: IntType
-
-  """
-  Search all assets larger or equal to the specified width
-  """
   lte: IntType
-
-  """
-  Search assets with the specified width
-  """
-  eq: IntType
 
   """
   Search assets that do not have the specified width
@@ -3515,9 +3533,9 @@ input UploadWidthFilter {
 }
 
 enum VideoMp4Res {
+  high
   low
   medium
-  high
 }
 
 type focalPoint {

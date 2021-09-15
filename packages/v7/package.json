@@ -36,7 +36,7 @@
     "eslint-config-next": "^11",
     "eslint-plugin-jsx-a11y": "^6",
     "eslint-plugin-react": "^7",
-    "framer-motion": "^3",
+    "framer-motion": "^4",
     "graphql": "^15",
     "graphql-request": "^3",
     "graphql-tag": "^2",
@@ -52,19 +52,19 @@
     "react-icons": "^4",
     "react-markdown": "6.0.2",
     "react-syntax-highlighter": "^15",
-    "remark-slug": "^6",
-    "remark-toc": "^7",
+    "remark-slug": "^7",
+    "remark-toc": "^8",
     "tinykeys": "^1",
     "typescript": "^4",
     "zustand": "^3"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "^2",
-    "@graphql-codegen/cli": "^1",
-    "@graphql-codegen/schema-ast": "^1",
-    "@graphql-codegen/typescript": "^1",
-    "@graphql-codegen/typescript-graphql-request": "^3",
-    "@graphql-codegen/typescript-operations": "^1"
+    "@graphql-codegen/add": "^3",
+    "@graphql-codegen/cli": "^2",
+    "@graphql-codegen/schema-ast": "^2",
+    "@graphql-codegen/typescript": "^2",
+    "@graphql-codegen/typescript-graphql-request": "^4",
+    "@graphql-codegen/typescript-operations": "^2"
   },
   "eslintConfig": {
     "extends": [

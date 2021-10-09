@@ -6,6 +6,7 @@ import MobileDrawer from "~components/mobile-drawer/lazy";
 import Navbar from "~components/navbar";
 import siteConfig from "~config/site";
 import meta from "~generated/meta.json";
+import useFathom from "~hooks/use-fathom";
 import useKeybinds from "~hooks/use-keybinds";
 import useNProgress from "~hooks/use-nprogress";
 import { useCheatsheetSyncSetup } from "~store/global";
@@ -14,10 +15,10 @@ import { Box, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { DefaultSeo, SocialProfileJsonLd } from "next-seo";
-import { OpenGraphImages } from "next-seo/lib/types";
 
 function LayoutSubscriptions() {
   useCheatsheetSyncSetup();
+  useFathom();
   useKeybinds();
   useNProgress();
 
@@ -45,7 +46,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
         openGraph={{
           type: "website",
           site_name: meta.site.seo.siteName,
-          images: [meta.site.seo.fallback.image as OpenGraphImages],
+          images: [meta.site.seo.fallback.image],
         }}
         twitter={{
           cardType: meta.site.seo.fallback.twitterCard,

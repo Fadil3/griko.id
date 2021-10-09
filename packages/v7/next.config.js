@@ -6,27 +6,24 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const Log = require("next/dist/build/output/log");
 
-// https://github.com/leerob/leerob.io/blob/9adc510cbfb3da88c3b0ad15632eb876ca91b607/next.config.js#L39-L49
 const csp = `
-  default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.usefathom.com;
   child-src *.twitter.com;
-  style-src 'self' 'unsafe-inline' fonts.googleapis.com;
+  connect-src *;
+  default-src 'self';
+  font-src 'self' fonts.gstatic.com;
   img-src * blob: data:;
   media-src 'none';
-  connect-src *;
-  font-src 'self' fonts.gstatic.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.usefathom.com;
+  style-src 'self' 'unsafe-inline' fonts.googleapis.com;
 `;
 
 /** @type {import("next/dist/server/config-shared").NextConfig} */
 const nextConfig = {
-  // https://github.com/vercel/next.js/blob/3b388c346c6990c98e83357ad68263edc7081210/packages/next/server/config-shared.ts#L73-L97
   experimental: {
     workerThreads: true,
   },
 
   // https://nextjs.org/docs/api-reference/next.config.js/headers
-  // https://github.com/leerob/leerob.io/blob/9adc510cbfb3da88c3b0ad15632eb876ca91b607/next.config.js#L51-L88
   async headers() {
     return [
       {
@@ -135,8 +132,6 @@ const nextConfig = {
    * @param {{dev:boolean;isServer:boolean}} opts
    */
   webpack(config, { defaultLoaders, dev, isServer, webpack }) {
-    // https://github.com/belgattitude/nextjs-monorepo-example/blob/16eceafc9300a268436f007bf0ec2a40953751f9/apps/web-app/next.config.js#L22-L39
-    // https://github.com/vercel/next.js/pull/13542
     const resolvedBaseUrl = path.resolve(config.context, "../../");
     config.module.rules = [
       ...config.module.rules,

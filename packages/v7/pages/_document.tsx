@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import analyticsConfig from "~config/analytics";
-import siteConfig from "~config/site";
 import emotionCache from "~lib/emotion-cache";
 
 import { ColorModeScript } from "@chakra-ui/react";
@@ -43,7 +42,7 @@ export default class CustomDocument extends Document {
           />
           <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
 
-          <script data-domain={siteConfig.domain} defer src="https://plausible.io/js/plausible.js" />
+          {/* <script data-domain={siteConfig.domain} defer src="https://plausible.io/js/plausible.js" /> */}
           <script
             data-cf-beacon={analyticsConfig.cloudflareDataBeacon}
             defer

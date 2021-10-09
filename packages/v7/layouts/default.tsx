@@ -7,6 +7,7 @@ import Navbar from "~components/navbar";
 import siteConfig from "~config/site";
 import meta from "~generated/meta.json";
 import useFathom from "~hooks/use-fathom";
+import useFathomEvents from "~hooks/use-fathom-events";
 import useKeybinds from "~hooks/use-keybinds";
 import useNProgress from "~hooks/use-nprogress";
 import { useCheatsheetSyncSetup } from "~store/global";
@@ -19,6 +20,7 @@ import { DefaultSeo, SocialProfileJsonLd } from "next-seo";
 function LayoutSubscriptions() {
   useCheatsheetSyncSetup();
   useFathom();
+  useFathomEvents();
   useKeybinds();
   useNProgress();
 

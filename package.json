@@ -19,23 +19,12 @@
     "#": "###################################################################"
   },
   "dependencies": {
+    "env-cmd": "^10",
+    "husky": "^7",
     "lerna": "^4",
+    "lint-staged": "^11",
     "patch-package": "^6",
     "postinstall-postinstall": "^2"
-  },
-  "devDependencies": {
-    "env-cmd": "^10",
-    "eslint": "^7",
-    "husky": "^7",
-    "lint-staged": "^11",
-    "prettier": "^2"
-  },
-  "prettier": {
-    "endOfLine": "auto",
-    "printWidth": 120,
-    "semi": true,
-    "singleQuote": false,
-    "trailingComma": "all"
   },
   "private": true
 }

@@ -26,7 +26,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.15.0.tgz#2dbaf8b85334796cafbb0f5793a90a2fc010b176"
   integrity sha512-0NqAC1IJE0S0+lL1SWFMxMkz1pKCNCjI4tr2Zx4LJSXxCLAdr6KyArnY+sno5m3yH9g737ygOyPABDsnXkpxiA==
 
-"@babel/core@^7", "@babel/core@^7.0.0", "@babel/core@^7.15.5":
+"@babel/core@^7.0.0", "@babel/core@^7.15.5":
   version "7.15.8"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.15.8.tgz#195b9f2bffe995d2c6c159e72fe525b4114e8c10"
   integrity sha512-3UG9dsxvYBMYwRv+gS41WKHno4K60/9GPy1CJaH6xy3Elq8CTtvtjT5R5jmNhXfCYLX2mTw+7/aq5ak/gOE0og==
@@ -47,7 +47,7 @@
     semver "^6.3.0"
     source-map "^0.5.0"
 
-"@babel/eslint-parser@^7", "@babel/eslint-parser@^7.15.4":
+"@babel/eslint-parser@^7.15.4":
   version "7.15.8"
   resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.15.8.tgz#8988660b59d739500b67d0585fd4daca218d9f11"
   integrity sha512-fYP7QFngCvgxjUuw8O057SVH5jCXsbFFOoE77CFDcvzwBVgTOkMD/L4mIC5Ud1xf8chK/no2fRbSSn1wvNmKuQ==
@@ -56,7 +56,7 @@
     eslint-visitor-keys "^2.1.0"
     semver "^6.3.0"
 
-"@babel/eslint-plugin@^7", "@babel/eslint-plugin@^7.14.5":
+"@babel/eslint-plugin@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/eslint-plugin/-/eslint-plugin-7.14.5.tgz#70b76608d49094062e8da2a2614d50fec775c00f"
   integrity sha512-nzt/YMnOOIRikvSn2hk9+W2omgJBy6U8TN0R+WTTmqapA+HnZTuviZaketdTE9W7/k/+E/DfZlt1ey1NSE39pg==
@@ -452,7 +452,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-"@babel/preset-react@^7", "@babel/preset-react@^7.14.5":
+"@babel/preset-react@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/preset-react/-/preset-react-7.14.5.tgz#0fbb769513f899c2c56f3a882fa79673c2d4ab3c"
   integrity sha512-XFxBkjyObLvBaAvkx1Ie95Iaq4S/GUEIrejyrntQ/VCMKUYvKLoyKxOBzJ2kjA3b6rC9/KL6KXfDC2GqvLiNqQ==
@@ -4813,16 +4813,11 @@ escape-string-regexp@^4.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
-eslint-config-kdnj@^0:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/eslint-config-kdnj/-/eslint-config-kdnj-0.0.9.tgz#d08382f473755f9bec2f23cf961124a2d935d0f0"
-  integrity sha512-NOFRurlnImha/oLpH4EgcROhauFWqn001p13I8ZVm5w3+PKVQBQRpVIGaLBUN/N8wpM8TZQlq6FivUAsbeXeVQ==
+eslint-config-kdnj@^1:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-kdnj/-/eslint-config-kdnj-1.0.0.tgz#b9bdf2aa4bef2f435deac708ef28a8aa937ba2f7"
+  integrity sha512-s3SAfsq7dEIsIV/yAzDOyONG9dWC/rBVkFfBsUgJJy5ASjU1/jL0xgCfN9RNkCkoFwy/CBfJvJTIeuWZZAgglw==
   dependencies:
-    "@babel/core" "^7"
-    "@babel/eslint-parser" "^7"
-    "@babel/eslint-plugin" "^7"
-    "@babel/preset-react" "^7"
-    eslint "^7"
     eslint-config-kentcdodds "^19"
     eslint-config-prettier "^8"
     eslint-plugin-jsx-a11y "^6"
@@ -4932,9 +4927,9 @@ eslint-plugin-jest-dom@^3.9.0:
     requireindex "^1.2.0"
 
 eslint-plugin-jest@^24.4.0:
-  version "24.5.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.5.2.tgz#f71f98f27fd18b50f55246ca090f36d1730e36a6"
-  integrity sha512-lrI3sGAyZi513RRmP08sIW241Ti/zMnn/6wbE4ZBhb3M2pJ9ztaZMnSKSKKBUfotVdwqU8W1KtD8ao2/FR8DIg==
+  version "24.7.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.7.0.tgz#206ac0833841e59e375170b15f8d0955219c4889"
+  integrity sha512-wUxdF2bAZiYSKBclsUMrYHH6WxiBreNjyDxbRv345TIvPeoCEgPNEn3Sa+ZrSqsf1Dl9SqqSREXMHExlMMu1DA==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 
@@ -6885,9 +6880,9 @@ lines-and-columns@^1.1.6:
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
 lint-staged@^11:
-  version "11.2.1"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-11.2.1.tgz#e49104cb4eb01ef36742531385be2efe2b85ed94"
-  integrity sha512-p56vAvBwABYSThvncT1Vuq0u6A8ZS56oC+eURfoavqyhBPJv+RGAmIU2kEYQOO19LPQVHQJ56eoBq/ARPlBoVQ==
+  version "11.2.2"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-11.2.2.tgz#b2b96d8c4eb350f832143c812defa2c70b9d0a2c"
+  integrity sha512-rbtLCRTyndPJvtjpLwVjjb6K91jQrJ06oNArA4igPTGYlDCrJMIFbNDUAQGa4GRd8AjUBHkAAmq+K38tcmMaAQ==
   dependencies:
     cli-truncate "2.1.0"
     colorette "^1.4.0"

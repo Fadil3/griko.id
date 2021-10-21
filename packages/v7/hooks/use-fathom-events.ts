@@ -9,12 +9,12 @@ export default function useFathomEvents() {
   // track opening cheatsheet
   useEffect(() => {
     return useGlobalStore.subscribe(
+      (store) => store.isCheatsheetOpen,
       (isOpen) => {
         if (isOpen) {
           Fathom.trackGoal(analyticsConfig.fathomEvents.openCheatsheet, 0);
         }
       },
-      (store) => store.isCheatsheetOpen,
     );
   }, []);
 

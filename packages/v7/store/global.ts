@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import create, { State } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
 
 interface GlobalStore extends State {
   isMobileDrawerOpen: boolean;
@@ -16,25 +17,27 @@ interface GlobalStore extends State {
   closeModals: () => void;
 }
 
-export const useGlobalStore = create<GlobalStore>((set, get) => ({
-  isMobileDrawerOpen: false,
-  openMobileDrawer: () => set({ isMobileDrawerOpen: true }),
-  closeMobileDrawer: () => set({ isMobileDrawerOpen: false }),
-  toggleMobileDrawer: (isMobileDrawerOpen = !get().isMobileDrawerOpen) => {
-    set({ isMobileDrawerOpen });
-  },
+export const useGlobalStore = create(
+  subscribeWithSelector<GlobalStore>((set, get) => ({
+    isMobileDrawerOpen: false,
+    openMobileDrawer: () => set({ isMobileDrawerOpen: true }),
+    closeMobileDrawer: () => set({ isMobileDrawerOpen: false }),
+    toggleMobileDrawer: (isMobileDrawerOpen = !get().isMobileDrawerOpen) => {
+      set({ isMobileDrawerOpen });
+    },
 
-  isCheatsheetOpen: false,
-  openCheatsheet: () => set({ isCheatsheetOpen: true }),
-  closeCheatsheet: () => set({ isCheatsheetOpen: false }),
-  toggleCheatsheet: (isCheatsheetOpen = !get().isCheatsheetOpen) => {
-    set({ isCheatsheetOpen });
-  },
+    isCheatsheetOpen: false,
+    openCheatsheet: () => set({ isCheatsheetOpen: true }),
+    closeCheatsheet: () => set({ isCheatsheetOpen: false }),
+    toggleCheatsheet: (isCheatsheetOpen = !get().isCheatsheetOpen) => {
+      set({ isCheatsheetOpen });
+    },
 
-  closeModals: () => {
-    set({ isCheatsheetOpen: false, isMobileDrawerOpen: false });
-  },
-}));
+    closeModals: () => {
+      set({ isCheatsheetOpen: false, isMobileDrawerOpen: false });
+    },
+  })),
+);
 
 export function useCheatsheetSyncSetup() {
   const channel = useRef<BroadcastChannel>();
@@ -50,7 +53,8 @@ export function useCheatsheetSyncSetup() {
       channel.current = new BroadcastChannel("state-cheatsheet");
     }
 
-    const unsub = useGlobalStore.subscribe<boolean>(
+    const unsub = useGlobalStore.subscribe(
+      (store) => store.isCheatsheetOpen,
       (state) => {
         if (!external.current) {
           timestamp.current = Date.now();
@@ -62,7 +66,6 @@ export function useCheatsheetSyncSetup() {
           }
         }
       },
-      (store) => store.isCheatsheetOpen,
     );
 
     function handler({ data }: MessageEvent<{ state: boolean; ts: number }>) {

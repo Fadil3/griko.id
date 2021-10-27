@@ -1,9 +1,5 @@
 const path = require("path");
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE == "true",
-});
-
 const Log = require("next/dist/build/output/log");
 
 const csp = `
@@ -20,6 +16,7 @@ const csp = `
 /** @type {import("next/dist/server/config-shared").NextConfig} */
 const nextConfig = {
   experimental: {
+    esmExternals: false, // https://github.com/vercel/next.js/issues/30330#issuecomment-952172377
     workerThreads: true,
   },
 
@@ -165,4 +162,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = nextConfig;

@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "incremental": true,
     "paths": {
       "~*": ["./*"]
     }
@@ -14,6 +15,7 @@
     "**/*.js",
     "**/*.json",
     "**/*.jsx",
+    "**/*.mjs",
     "**/*.ts",
     "**/*.tsx"
   ]
